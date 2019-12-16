@@ -1,0 +1,1637 @@
+SQL> select count(*) from emp group by deptno having job='clerk';
+select count(*) from emp group by deptno having job='clerk'
+                                                *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select count(*) from emp where job='CLERK' group by deptno
+SQL> /
+
+  COUNT(*)                                                                      
+----------                                                                      
+         1                                                                      
+         2                                                                      
+         1                                                                      
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* select MAX(SAL) from emp where job='MANAGER' group by deptno
+SQL> /
+
+  MAX(SAL)                                                                      
+----------                                                                      
+      2850                                                                      
+      2975                                                                      
+      2450                                                                      
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* select MAX(SAL),DEPTNO from emp where job='MANAGER' group by deptno
+SQL> /
+
+  MAX(SAL)     DEPTNO                                                           
+---------- ----------                                                           
+      2850         30                                                           
+      2975         20                                                           
+      2450         10                                                           
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* select COUNT(*),SAL from emp  group by SAL
+SQL> /
+
+  COUNT(*)        SAL                                                           
+---------- ----------                                                           
+         1       2450                                                           
+         1       5000                                                           
+         1       1300                                                           
+         2       1250                                                           
+         1       2850                                                           
+         1       1100                                                           
+         1       2975                                                           
+         2       3000                                                           
+         1       1500                                                           
+         1        950                                                           
+         1        800                                                           
+
+  COUNT(*)        SAL                                                           
+---------- ----------                                                           
+         1       1600                                                           
+
+12 rows selected.
+
+SQL> SPOOL OFF;
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DEPTNO,COUNT(*) FROM EMP GROUP BY DEPTNO HAVING DEPTNO!=10
+SQL> /
+
+    DEPTNO   COUNT(*)                                                           
+---------- ----------                                                           
+        30          6                                                           
+        20          5                                                           
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT COUNT(*) FROM EMP WHERE COMM IS NOT NULL GROUP BY DEPT NO
+SQL> /
+SELECT COUNT(*) FROM EMP WHERE COMM IS NOT NULL GROUP BY DEPT NO
+                                                              *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT COUNT(*) FROM EMP WHERE COMM IS NOT NULL GROUP BY DEPTNO
+SQL> /
+
+  COUNT(*)                                                                      
+----------                                                                      
+         4                                                                      
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT COUNT(*),DEPTNO FROM EMP WHERE COMM IS NOT NULL GROUP BY DEPTNO
+SQL> /
+
+  COUNT(*)     DEPTNO                                                           
+---------- ----------                                                           
+         4         30                                                           
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT COUNT(*),DEPTNO FROM EMP WHERE JOB!='MANAGER' GROUP BY SAL HAVING SAL>1600
+SQL> /
+SELECT COUNT(*),DEPTNO FROM EMP WHERE JOB!='MANAGER' GROUP BY SAL HAVING SAL>1600
+                *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT COUNT(*),SAL FROM EMP WHERE JOB!='MANAGER' GROUP BY SAL HAVING SAL>1600
+SQL> /
+
+  COUNT(*)        SAL                                                           
+---------- ----------                                                           
+         1       5000                                                           
+         2       3000                                                           
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT COUNT(*),SAL FROM EMP WHERE JOB!='MANAGER' GROUP BY SAL HAVING SAL>1600
+SQL> /
+
+  COUNT(*)        SAL                                                           
+---------- ----------                                                           
+         1       5000                                                           
+         2       3000                                                           
+
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO LOC                                                                  
+---------- ----------                                                           
+      7782 CLERK      MANAGER         7839 09-JUN-81       2450                 
+        10 NEW YORK                                                             
+                                                                                
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                 
+        20 DALLAS                                                               
+                                                                                
+      7839 KING       PRESIDENT            17-NOV-81       5000                 
+        10 NEW YORK                                                             
+                                                                                
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO LOC                                                                  
+---------- ----------                                                           
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0      
+        30 CHICAGO                                                              
+                                                                                
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                 
+        20 DALLAS                                                               
+                                                                                
+      7900 JAMES      CLERK           7698 03-DEC-81        950                 
+        30 CHICAGO                                                              
+                                                                                
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO LOC                                                                  
+---------- ----------                                                           
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                 
+        20 DALLAS                                                               
+                                                                                
+      7934 MILLAR     CLERK           7782 23-JAN-82       1300                 
+        10 NEW YORK                                                             
+                                                                                
+      7369 SMITH      CLERK           7902 17-DEC-80        800                 
+        20 DALLAS                                                               
+                                                                                
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO LOC                                                                  
+---------- ----------                                                           
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300      
+        30 CHICAGO                                                              
+                                                                                
+      7521 WARD       SALESMAN        7698 20-FEB-81       1250        500      
+        30 CHICAGO                                                              
+                                                                                
+      7566 JONES      MANAGER         7839 02-APR-81       2975                 
+        20 DALLAS                                                               
+                                                                                
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO LOC                                                                  
+---------- ----------                                                           
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400      
+        30 CHICAGO                                                              
+                                                                                
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                 
+        30 CHICAGO                                                              
+                                                                                
+
+14 rows selected.
+
+SQL> SET PAGES 100 LINES 100;
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO LOC           
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- ----------    
+      7782 CLERK      MANAGER         7839 09-JUN-81       2450                    10 NEW YORK      
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 DALLAS        
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 NEW YORK      
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 CHICAGO       
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 DALLAS        
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 CHICAGO       
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 DALLAS        
+      7934 MILLAR     CLERK           7782 23-JAN-82       1300                    10 NEW YORK      
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20 DALLAS        
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 CHICAGO       
+      7521 WARD       SALESMAN        7698 20-FEB-81       1250        500         30 CHICAGO       
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 DALLAS        
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 CHICAGO       
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 CHICAGO       
+
+14 rows selected.
+
+SQL> SELECT COUNT(*),SAL FROM EMP WHERE JOB!='MANAGER' GROUP BY SAL HAVING SAL>1600;
+
+  COUNT(*)        SAL                                                                               
+---------- ----------                                                                               
+         1       5000                                                                               
+         2       3000                                                                               
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT AVG(SAL) FROM EMP GROUP BY JOB HAVING JOB='MANAGER'
+SQL> /
+
+  AVG(SAL)                                                                                          
+----------                                                                                          
+2758.33333                                                                                          
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT COUNT(*) FROM EMP GROUP BY DEPTNO HAVING COUNT(HIREDATE)>1 AND 
+SQL> /
+SELECT COUNT(*) FROM EMP GROUP BY DEPTNO HAVING COUNT(HIREDATE)>1 AND 
+                                                                     *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT COUNT(*) FROM EMP GROUP BY DEPTNO HAVING COUNT(HIREDATE)>1
+SQL> /
+
+  COUNT(*)                                                                                          
+----------                                                                                          
+         6                                                                                          
+         5                                                                                          
+         3                                                                                          
+
+SQL> SPOOL OFF;
+SQL> ed
+Wrote file afiedt.buf
+
+  1* SELECT count(*) from emp group by deptno having count(*)>1
+SQL> /
+
+  COUNT(*)                                                                                          
+----------                                                                                          
+         6                                                                                          
+         5                                                                                          
+         3                                                                                          
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* SELECT count(*) from emp group by sal,deptno having count(*)>1
+SQL> /
+
+  COUNT(*)                                                                                          
+----------                                                                                          
+         2                                                                                          
+         2                                                                                          
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* SELECT count(*) from emp group by sal having count(*)>1
+SQL> /
+
+  COUNT(*)                                                                                          
+----------                                                                                          
+         2                                                                                          
+         2                                                                                          
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* SELECT count(*) from emp group by sal having count(*)>1
+SQL> /
+
+  COUNT(*)                                                                                          
+----------                                                                                          
+         2                                                                                          
+         2                                                                                          
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* SELECT max(sal) from emp group by job having job not like 'k%'
+SQL> /
+
+  MAX(SAL)                                                                                          
+----------                                                                                          
+      1600                                                                                          
+      1300                                                                                          
+      5000                                                                                          
+      2975                                                                                          
+      3000                                                                                          
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* SELECT count(*) from emp group by deptno having empn0=7839
+SQL> /
+SELECT count(*) from emp group by deptno having empn0=7839
+                                                *
+ERROR at line 1:
+ORA-00904: "EMPN0": invalid identifier 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* SELECT count(*) from emp group by deptno having empno=7839
+SQL> /
+SELECT count(*) from emp group by deptno having empno=7839
+                                                *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* SELECT count(*) from emp group by deptno having mgr=7839
+SQL> /
+SELECT count(*) from emp group by deptno having mgr=7839
+                                                *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* SELECT count(*) from emp where mgr=7839 group by deptno 
+SQL> /
+
+  COUNT(*)                                                                                          
+----------                                                                                          
+         1                                                                                          
+         1                                                                                          
+         1                                                                                          
+
+SQL> spool off;
+SQL> ed
+Wrote file afiedt.buf
+
+  1* SELECT count(*) from emp where ename like ('a%') or ename like ('e%') or ename like ('i%') or ename like ('o%') or ename like ('u%')group by deptno
+SQL> /
+
+no rows selected
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* SELECT count(*) from emp where ename like 'A%' or ename like 'E%' or ename like ('I%') or ename like ('O%') or ename like ('U%')group by deptno
+SQL> /
+
+  COUNT(*)                                                                                          
+----------                                                                                          
+         1                                                                                          
+         1                                                                                          
+
+SQL> SPOOL OFF;
+SQL> SELECT SUM(SAL) FROM EMP GROUP BY JOB;
+
+  SUM(SAL)                                                                      
+----------                                                                      
+      5600                                                                      
+      4150                                                                      
+      5000                                                                      
+      8275                                                                      
+      6000                                                                      
+
+SQL> SELECT HIREDATE FROM EMP GROUP BY HIREDATE HAVING COUNT(*)>=3;
+
+no rows selected
+
+SQL> SPOOL OFF;
+SQL> SELECT DEPTNO FROM EMP GROUP BY DEPTNO HAVING COUNT(*)>2;
+
+    DEPTNO                                                                      
+----------                                                                      
+        30                                                                      
+        20                                                                      
+        10                                                                      
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DEPTNO,SUM(SAL) FROM EMP GROUP BY DEPTNO HAVING COUNT(*)>2
+SQL> /
+
+    DEPTNO   SUM(SAL)                                                           
+---------- ----------                                                           
+        30       9400                                                           
+        20      10875                                                           
+        10       8750                                                           
+
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO LOC                                                                  
+---------- ----------                                                           
+      7782 CLERK      MANAGER         7839 09-JUN-81       2450                 
+        10 NEW YORK                                                             
+                                                                                
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                 
+        20 DALLAS                                                               
+                                                                                
+      7839 KING       PRESIDENT            17-NOV-81       5000                 
+        10 NEW YORK                                                             
+                                                                                
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO LOC                                                                  
+---------- ----------                                                           
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0      
+        30 CHICAGO                                                              
+                                                                                
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                 
+        20 DALLAS                                                               
+                                                                                
+      7900 JAMES      CLERK           7698 03-DEC-81        950                 
+        30 CHICAGO                                                              
+                                                                                
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO LOC                                                                  
+---------- ----------                                                           
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                 
+        20 DALLAS                                                               
+                                                                                
+      7934 MILLAR     CLERK           7782 23-JAN-82       1300                 
+        10 NEW YORK                                                             
+                                                                                
+      7369 SMITH      CLERK           7902 17-DEC-80        800                 
+        20 DALLAS                                                               
+                                                                                
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO LOC                                                                  
+---------- ----------                                                           
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300      
+        30 CHICAGO                                                              
+                                                                                
+      7521 WARD       SALESMAN        7698 20-FEB-81       1250        500      
+        30 CHICAGO                                                              
+                                                                                
+      7566 JONES      MANAGER         7839 02-APR-81       2975                 
+        20 DALLAS                                                               
+                                                                                
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO LOC                                                                  
+---------- ----------                                                           
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400      
+        30 CHICAGO                                                              
+                                                                                
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                 
+        30 CHICAGO                                                              
+                                                                                
+
+14 rows selected.
+
+SQL> SET PAGES 100 LINES 100;
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO LOC           
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- ----------    
+      7782 CLERK      MANAGER         7839 09-JUN-81       2450                    10 NEW YORK      
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20 DALLAS        
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10 NEW YORK      
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30 CHICAGO       
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20 DALLAS        
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30 CHICAGO       
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20 DALLAS        
+      7934 MILLAR     CLERK           7782 23-JAN-82       1300                    10 NEW YORK      
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20 DALLAS        
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30 CHICAGO       
+      7521 WARD       SALESMAN        7698 20-FEB-81       1250        500         30 CHICAGO       
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20 DALLAS        
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30 CHICAGO       
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30 CHICAGO       
+
+14 rows selected.
+
+SQL> SELECT COUNT(*) FROM EMP GROUP BY DEPTNO HAVING AVG(SAL)<COMM;
+SELECT COUNT(*) FROM EMP GROUP BY DEPTNO HAVING AVG(SAL)<COMM
+                                                         *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT COUNT(*) FROM EMP WHERE SAL<COMM GROUP BY DEPTNO HAVING AVG(SAL)<COMM
+SQL> /
+SELECT COUNT(*) FROM EMP WHERE SAL<COMM GROUP BY DEPTNO HAVING AVG(SAL)<COMM
+                                                                        *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT COUNT(*) FROM EMP WHERE SAL<COMM GROUP BY DEPTNO HAVING AVG(SAL)<COMM
+SQL> SELECT DEPTNO FROM EMP GROUP BY DEPTNO HAVING SAL*12<9000;
+SELECT DEPTNO FROM EMP GROUP BY DEPTNO HAVING SAL*12<9000
+                                              *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DEPTNO FROM EMP GROUP BY DEPTNO HAVING COUNT(*)>2 AND SAL*12<9000
+SQL> /
+SELECT DEPTNO FROM EMP GROUP BY DEPTNO HAVING COUNT(*)>2 AND SAL*12<9000
+                                                             *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DEPTNO,COUNT(*) FROM EMP GROUP BY DEPTNO HAVING COUNT(*)>2 AND SAL*12<9000
+SQL> /
+SELECT DEPTNO,COUNT(*) FROM EMP GROUP BY DEPTNO HAVING COUNT(*)>2 AND SAL*12<9000
+                                                                      *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DEPTNO,COUNT(*) FROM EMP GROUP BY DEPTNO HAVING COUNT(*)>2 AND SAL*12>9000
+SQL> /
+SELECT DEPTNO,COUNT(*) FROM EMP GROUP BY DEPTNO HAVING COUNT(*)>2 AND SAL*12>9000
+                                                                      *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DEPTNO,COUNT(*) FROM EMP GROUP BY DEPTNO HAVING COUNT(*)>2 AND SAL*12 TOTAL>9000
+SQL> /
+SELECT DEPTNO,COUNT(*) FROM EMP GROUP BY DEPTNO HAVING COUNT(*)>2 AND SAL*12 TOTAL>9000
+                                                                             *
+ERROR at line 1:
+ORA-00920: invalid relational operator 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DEPTNO,COUNT(*),SAL FROM EMP GROUP BY DEPTNO HAVING COUNT(*)>2 AND SAL*12>9000
+SQL> /
+SELECT DEPTNO,COUNT(*),SAL FROM EMP GROUP BY DEPTNO HAVING COUNT(*)>2 AND SAL*12>9000
+                                                                          *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DEPTNO,COUNT(*) FROM EMP GROUP BY DEPTNO HAVING COUNT(*)>2 AND SUM(SAL)>9000
+SQL> /
+
+    DEPTNO   COUNT(*)                                                                               
+---------- ----------                                                                               
+        30          6                                                                               
+        20          5                                                                               
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DEPTNO,COUNT(*),SUM(SAL) FROM EMP GROUP BY DEPTNO HAVING COUNT(*)>2 AND SUM(SAL)>9000
+SQL> /
+
+    DEPTNO   COUNT(*)   SUM(SAL)                                                                    
+---------- ---------- ----------                                                                    
+        30          6       9400                                                                    
+        20          5      10875                                                                    
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DEPTNO,COUNT(*),SUM(SAL) FROM EMP GROUP BY DEPTNO HAVING COUNT(*)>2 AND SUM(SAL)>9000
+SQL> /
+
+    DEPTNO   COUNT(*)   SUM(SAL)                                                                    
+---------- ---------- ----------                                                                    
+        30          6       9400                                                                    
+        20          5      10875                                                                    
+
+SQL> SPOOL OFF;
+SQL> SELECT DNAME,SAL FROM DEPT,EMP WHERE DEPT.DEPTNO=EMP.DEPTNO;
+
+DNAME                 SAL                                                       
+-------------- ----------                                                       
+ACCOUNTING           2450                                                       
+RESEARCH             3000                                                       
+ACCOUNTING           5000                                                       
+SALES                1500                                                       
+RESEARCH             1100                                                       
+SALES                 950                                                       
+RESEARCH             3000                                                       
+ACCOUNTING           1300                                                       
+RESEARCH              800                                                       
+SALES                1600                                                       
+SALES                1250                                                       
+
+DNAME                 SAL                                                       
+-------------- ----------                                                       
+RESEARCH             2975                                                       
+SALES                1250                                                       
+SALES                2850                                                       
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,SAL FROM DEPT,EMP WHERE DEPT.DEPTNO=EMP.DEPTNO GROUP BY JOB HAVING JOB='ACCOUNTING'
+SQL> /
+SELECT DNAME,SAL FROM DEPT,EMP WHERE DEPT.DEPTNO=EMP.DEPTNO GROUP BY JOB HAVING JOB='ACCOUNTING'
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,SAL FROM DEPT,EMP WHERE DEPT.DEPTNO=EMP.DEPTNO 
+SQL> /
+
+DNAME                 SAL                                                       
+-------------- ----------                                                       
+ACCOUNTING           2450                                                       
+RESEARCH             3000                                                       
+ACCOUNTING           5000                                                       
+SALES                1500                                                       
+RESEARCH             1100                                                       
+SALES                 950                                                       
+RESEARCH             3000                                                       
+ACCOUNTING           1300                                                       
+RESEARCH              800                                                       
+SALES                1600                                                       
+SALES                1250                                                       
+
+DNAME                 SAL                                                       
+-------------- ----------                                                       
+RESEARCH             2975                                                       
+SALES                1250                                                       
+SALES                2850                                                       
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,SAL FROM DEPT,EMP WHERE DEPT.DEPTNO=EMP.DEPTNO AND JOB='ACCOUNTING'
+SQL> /
+
+no rows selected
+
+SQL> SELECT DNAME, SAL
+  2  FROM EMP
+  3  INNER JOIN DEPT
+  4  ON EMP.DEPTNO=DEPT.DEPTNO
+  5  WHERE JOB='ACCOUNTING';
+
+no rows selected
+
+SQL> SELECT *FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO                                                                      
+----------                                                                      
+      7782 CLERK      MANAGER         7839 09-JUN-81       2450                 
+        10                                                                      
+                                                                                
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                 
+        20                                                                      
+                                                                                
+      7839 KING       PRESIDENT            17-NOV-81       5000                 
+        10                                                                      
+                                                                                
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO                                                                      
+----------                                                                      
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0      
+        30                                                                      
+                                                                                
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                 
+        20                                                                      
+                                                                                
+      7900 JAMES      CLERK           7698 03-DEC-81        950                 
+        30                                                                      
+                                                                                
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO                                                                      
+----------                                                                      
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                 
+        20                                                                      
+                                                                                
+      7934 MILLAR     CLERK           7782 23-JAN-82       1300                 
+        10                                                                      
+                                                                                
+      7369 SMITH      CLERK           7902 17-DEC-80        800                 
+        20                                                                      
+                                                                                
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO                                                                      
+----------                                                                      
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300      
+        30                                                                      
+                                                                                
+      7521 WARD       SALESMAN        7698 20-FEB-81       1250        500      
+        30                                                                      
+                                                                                
+      7566 JONES      MANAGER         7839 02-APR-81       2975                 
+        20                                                                      
+                                                                                
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO                                                                      
+----------                                                                      
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400      
+        30                                                                      
+                                                                                
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                 
+        30                                                                      
+                                                                                
+
+14 rows selected.
+
+SQL> SET LINES 100 PAGES100;
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO               
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------               
+      7782 CLERK      MANAGER         7839 09-JUN-81       2450                    10               
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20               
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10               
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30               
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20               
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30               
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20               
+      7934 MILLAR     CLERK           7782 23-JAN-82       1300                    10               
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20               
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30               
+      7521 WARD       SALESMAN        7698 20-FEB-81       1250        500         30               
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20               
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30               
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30               
+
+14 rows selected.
+
+SQL> SELECT DNAME,SAL*12 FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO;
+
+DNAME              SAL*12                                                                           
+-------------- ----------                                                                           
+ACCOUNTING          29400                                                                           
+RESEARCH            36000                                                                           
+ACCOUNTING          60000                                                                           
+SALES               18000                                                                           
+RESEARCH            13200                                                                           
+SALES               11400                                                                           
+RESEARCH            36000                                                                           
+ACCOUNTING          15600                                                                           
+RESEARCH             9600                                                                           
+SALES               19200                                                                           
+SALES               15000                                                                           
+RESEARCH            35700                                                                           
+SALES               15000                                                                           
+SALES               34200                                                                           
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,SAL FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO AND DNAME='ACCOUNTING'
+SQL> /
+
+DNAME                 SAL                                                                           
+-------------- ----------                                                                           
+ACCOUNTING           2450                                                                           
+ACCOUNTING           5000                                                                           
+ACCOUNTING           1300                                                                           
+
+SQL> SELECT ENAME,DNAME FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO AND DNAME LIKE '%A%';
+
+ENAME      DNAME                                                                                    
+---------- --------------                                                                           
+CLERK      ACCOUNTING                                                                               
+SCOTT      RESEARCH                                                                                 
+KING       ACCOUNTING                                                                               
+TURNER     SALES                                                                                    
+ADAMS      RESEARCH                                                                                 
+JAMES      SALES                                                                                    
+FORD       RESEARCH                                                                                 
+MILLAR     ACCOUNTING                                                                               
+SMITH      RESEARCH                                                                                 
+ALLEN      SALES                                                                                    
+WARD       SALES                                                                                    
+JONES      RESEARCH                                                                                 
+MARTIN     SALES                                                                                    
+BLAKE      SALES                                                                                    
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT ENAME,DNAME FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO AND JOB='SALESMAN'
+SQL> /
+
+ENAME      DNAME                                                                                    
+---------- --------------                                                                           
+TURNER     SALES                                                                                    
+ALLEN      SALES                                                                                    
+WARD       SALES                                                                                    
+MARTIN     SALES                                                                                    
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT JOB,DNAME FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO AND JOB LIKE 'S%' AND DNAME LIKE 'S%'
+SQL> /
+
+JOB       DNAME                                                                                     
+--------- --------------                                                                            
+SALESMAN  SALES                                                                                     
+SALESMAN  SALES                                                                                     
+SALESMAN  SALES                                                                                     
+SALESMAN  SALES                                                                                     
+
+SQL> SPOOL OFF;
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT MGR,DNAME FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO AND EMPNO='7839'
+SQL> /
+
+       MGR DNAME                                                                                    
+---------- --------------                                                                           
+           ACCOUNTING                                                                               
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT MGR,DNAME FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO AND MGR='7839'
+SQL> /
+
+       MGR DNAME                                                                                    
+---------- --------------                                                                           
+      7839 ACCOUNTING                                                                               
+      7839 RESEARCH                                                                                 
+      7839 SALES                                                                                    
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,HIREDATE FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO
+SQL> /
+
+DNAME          HIREDATE                                                                             
+-------------- ---------                                                                            
+ACCOUNTING     09-JUN-81                                                                            
+RESEARCH       19-APR-87                                                                            
+ACCOUNTING     17-NOV-81                                                                            
+SALES          08-SEP-81                                                                            
+RESEARCH       23-MAY-87                                                                            
+SALES          03-DEC-81                                                                            
+RESEARCH       03-DEC-81                                                                            
+ACCOUNTING     23-JAN-82                                                                            
+RESEARCH       17-DEC-80                                                                            
+SALES          20-FEB-81                                                                            
+SALES          20-FEB-81                                                                            
+RESEARCH       02-APR-81                                                                            
+SALES          28-SEP-81                                                                            
+SALES          01-MAY-81                                                                            
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,HIREDATE FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO AND HIREDATE>'31-DEC-83' AND DNAME IN('ACCOUNTING',RESEARCH')
+SQL> /
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,HIREDATE FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO AND HIREDATE>'31-DEC-83' AND DNAME IN('ACCOUNTING','RESEARCH')
+SQL> /
+
+DNAME          HIREDATE                                                                             
+-------------- ---------                                                                            
+RESEARCH       19-APR-87                                                                            
+RESEARCH       23-MAY-87                                                                            
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,ENAME FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO AND DEPTNO IN(10,30) GROUP BY COMM
+SQL> /
+SELECT DNAME,ENAME FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO AND DEPTNO IN(10,30) GROUP BY COMM
+                                                                  *
+ERROR at line 1:
+ORA-00918: column ambiguously defined 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,ENAME FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO AND DEPTNO IN(10,30) 
+SQL> /
+SELECT DNAME,ENAME FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO AND DEPTNO IN(10,30) 
+                                                                  *
+ERROR at line 1:
+ORA-00918: column ambiguously defined 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,ENAME FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO AND DEPTNO IN(10,30) 
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,EMPNO FROM DEPT,EMP WHERE DEPT.DEPTNO=EMP.DEPTNO AND EMPNO IN(7839,7902) AND LOC='NEW YORK'
+SQL> /
+
+DNAME               EMPNO                                                                           
+-------------- ----------                                                                           
+ACCOUNTING           7839                                                                           
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT LOC,AVG(SAL) FROM DEPT,EMP WHERE DEPT.DEPTNO=EMP.DEPTNO AND ENAME NOT LIKE '%A' GROUP BY LOC
+SQL> /
+
+LOC             AVG(SAL)                                                                            
+------------- ----------                                                                            
+NEW YORK      2916.66667                                                                            
+CHICAGO       1566.66667                                                                            
+DALLAS              2175                                                                            
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT ENAME,LOC FROM DEPT,EMP WHERE DEPT.DEPTNO=EMP.DEPTNO AND JOB='MANAGER' AND EMPNO=7839
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT LOC,ENAME FROM DEPT,EMP WHERE DEPT.DEPTNO=EMP.DEPTNO AND JOB='MANAGER' AND EMPNO=7839
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,EMPNO FROM DEPT,EMP WHERE DEPT.DEPTNO=EMP.DEPTNO AND JOB='CLERK' AND MGR IS NOT NULL
+SQL> /
+
+DNAME               EMPNO                                                                           
+-------------- ----------                                                                           
+RESEARCH             7876                                                                           
+SALES                7900                                                                           
+ACCOUNTING           7934                                                                           
+RESEARCH             7369                                                                           
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,SUM(SAL) FROM DEPT,EMP WHERE DEPT.DEPTNO=EMP.DEPTNO GROUP BY DEPTNO HAVING COUNT(*)>=4
+SQL> /
+SELECT DNAME,SUM(SAL) FROM DEPT,EMP WHERE DEPT.DEPTNO=EMP.DEPTNO GROUP BY DEPTNO HAVING COUNT(*)>=4
+                                                                          *
+ERROR at line 1:
+ORA-00918: column ambiguously defined 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,COUNT(*) FROM DEPT,EMP WHERE DEPT.DEPTNO=EMP.DEPTNO AND JOB IN ('MANAGER','CLERK') GROUP BY DEPTNO 
+SQL> /
+SELECT DNAME,COUNT(*) FROM DEPT,EMP WHERE DEPT.DEPTNO=EMP.DEPTNO AND JOB IN ('MANAGER','CLERK') GROUP BY DEPTNO 
+                                                                                                         *
+ERROR at line 1:
+ORA-00918: column ambiguously defined 
+
+
+SQL> SPOOL OFF;
+SQL> SELECT ENAME,JOB,SAL*12 ANNUAL SALARY,DEPTNO,DNAME FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO AND SAL*12=30000 AND JOB!='CLERK';
+SELECT ENAME,JOB,SAL*12 ANNUAL SALARY,DEPTNO,DNAME FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO AND SAL*12=30000 AND JOB!='CLERK'
+                               *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT ENAME,JOB,SAL*12 ANNUAL_SALARY,DEPTNO,DNAME FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO AND SAL*12=30000 AND JOB!='CLERK'
+SQL> /
+SELECT ENAME,JOB,SAL*12 ANNUAL_SALARY,DEPTNO,DNAME FROM EMP,DEPT WHERE DEPT.DEPTNO=EMP.DEPTNO AND SAL*12=30000 AND JOB!='CLERK'
+                                      *
+ERROR at line 1:
+ORA-00918: column ambiguously defined 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,JOB,SAL*12 "ANNUAL_SALARY",DEPTNO,DNAME 
+  2  FROM EMP,DEPT 
+  3* WHERE DEPT.DEPTNO=EMP.DEPTNO OR (SAL*12=30000 AND JOB!='CLERK')
+SQL> /
+SELECT ENAME,JOB,SAL*12 "ANNUAL_SALARY",DEPTNO,DNAME 
+                                        *
+ERROR at line 1:
+ORA-00918: column ambiguously defined 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,JOB,SAL*12 ,DEPTNO,DNAME 
+  2  FROM EMP,DEPT 
+  3* WHERE DEPT.DEPTNO=EMP.DEPTNO OR (SAL*12=30000 AND JOB!='CLERK')
+SQL> /
+SELECT ENAME,JOB,SAL*12 ,DEPTNO,DNAME 
+                         *
+ERROR at line 1:
+ORA-00918: column ambiguously defined 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,JOB,SAL*12 ,DNAME 
+  2  FROM EMP,DEPT 
+  3* WHERE DEPT.DEPTNO=EMP.DEPTNO OR (SAL*12=30000 AND JOB!='CLERK')
+SQL> /
+
+ENAME      JOB           SAL*12 DNAME                                           
+---------- --------- ---------- --------------                                  
+CLERK      MANAGER        29400 ACCOUNTING                                      
+KING       PRESIDENT      60000 ACCOUNTING                                      
+MILLAR     CLERK          15600 ACCOUNTING                                      
+SCOTT      ANALYST        36000 RESEARCH                                        
+ADAMS      CLERK          13200 RESEARCH                                        
+FORD       ANALYST        36000 RESEARCH                                        
+SMITH      CLERK           9600 RESEARCH                                        
+JONES      MANAGER        35700 RESEARCH                                        
+TURNER     SALESMAN       18000 SALES                                           
+JAMES      CLERK          11400 SALES                                           
+ALLEN      SALESMAN       19200 SALES                                           
+
+ENAME      JOB           SAL*12 DNAME                                           
+---------- --------- ---------- --------------                                  
+WARD       SALESMAN       15000 SALES                                           
+MARTIN     SALESMAN       15000 SALES                                           
+BLAKE      MANAGER        34200 SALES                                           
+
+14 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,JOB,SAL*12 ,DNAME 
+  2  FROM EMP JOIN DEPT 
+  3  ON DEPT.DEPTNO=EMP.DEPTNO 
+  4* WHERE SAL*12=30000 AND JOB!='CLERK'
+SQL> /
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,JOB,SAL*12 ,DNAME,DEPTNO 
+  2  FROM EMP JOIN DEPT 
+  3  ON DEPT.DEPTNO=EMP.DEPTNO 
+  4* WHERE SAL*12=30000 AND JOB!='CLERK'
+SQL> /
+SELECT ENAME,JOB,SAL*12 ,DNAME,DEPTNO 
+                               *
+ERROR at line 1:
+ORA-00918: column ambiguously defined 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,JOB,SAL*12 ,DNAME 
+  2  FROM EMP JOIN DEPT 
+  3  ON DEPT.DEPTNO=EMP.DEPTNO 
+  4* WHERE SAL*12>30000 AND JOB!='CLERK'
+SQL> /
+
+ENAME      JOB           SAL*12 DNAME                                           
+---------- --------- ---------- --------------                                  
+SCOTT      ANALYST        36000 RESEARCH                                        
+KING       PRESIDENT      60000 ACCOUNTING                                      
+FORD       ANALYST        36000 RESEARCH                                        
+JONES      MANAGER        35700 RESEARCH                                        
+BLAKE      MANAGER        34200 SALES                                           
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,JOB,SAL*12 ,DNAME 
+  2  FROM EMP LEFT OUTER JOIN DEPT 
+  3  ON DEPT.DEPTNO=EMP.DEPTNO 
+  4* WHERE SAL*12>30000 AND JOB!='CLERK'
+SQL> /
+
+ENAME      JOB           SAL*12 DNAME                                           
+---------- --------- ---------- --------------                                  
+SCOTT      ANALYST        36000 RESEARCH                                        
+KING       PRESIDENT      60000 ACCOUNTING                                      
+FORD       ANALYST        36000 RESEARCH                                        
+JONES      MANAGER        35700 RESEARCH                                        
+BLAKE      MANAGER        34200 SALES                                           
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,JOB,SAL*12 ,DNAME,DEPTNO 
+  2  FROM EMP LEFT OUTER JOIN DEPT 
+  3  ON DEPT.DEPTNO=EMP.DEPTNO 
+  4* WHERE SAL*12>30000 AND JOB!='CLERK'
+SQL> /
+SELECT ENAME,JOB,SAL*12 ,DNAME,DEPTNO 
+                               *
+ERROR at line 1:
+ORA-00918: column ambiguously defined 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,JOB,SAL*12 ,DNAME
+  2  FROM EMP LEFT OUTER JOIN DEPT 
+  3  ON DEPT.DEPTNO=EMP.DEPTNO 
+  4* WHERE SAL*12>30000 AND JOB!='CLERK'
+SQL> /
+
+ENAME      JOB           SAL*12 DNAME                                           
+---------- --------- ---------- --------------                                  
+SCOTT      ANALYST        36000 RESEARCH                                        
+KING       PRESIDENT      60000 ACCOUNTING                                      
+FORD       ANALYST        36000 RESEARCH                                        
+JONES      MANAGER        35700 RESEARCH                                        
+BLAKE      MANAGER        34200 SALES                                           
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,JOB,SAL*12 ,DNAME,DEPTNO
+  2  FROM EMP LEFT OUTER JOIN DEPT 
+  3  ON DEPT.DEPTNO(+)=EMP.DEPTNO 
+  4* WHERE SAL*12>30000 AND JOB!='CLERK'
+SQL> /
+SELECT ENAME,JOB,SAL*12 ,DNAME,DEPTNO
+                               *
+ERROR at line 1:
+ORA-00918: column ambiguously defined 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,JOB,SAL*12 ,DNAME
+  2  FROM EMP LEFT OUTER JOIN DEPT 
+  3  ON DEPT.DEPTNO=EMP.DEPTNO 
+  4* WHERE SAL*12>30000 AND JOB!='CLERK'
+SQL> /
+
+ENAME      JOB           SAL*12 DNAME                                           
+---------- --------- ---------- --------------                                  
+SCOTT      ANALYST        36000 RESEARCH                                        
+KING       PRESIDENT      60000 ACCOUNTING                                      
+FORD       ANALYST        36000 RESEARCH                                        
+JONES      MANAGER        35700 RESEARCH                                        
+BLAKE      MANAGER        34200 SALES                                           
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,EMPNO,MGR,EMPNO
+  2  FROM EMP JOIN DEPT 
+  3* ON DEPT.DEPTNO=EMP.DEPTNO 
+SQL> /
+
+ENAME           EMPNO        MGR      EMPNO                                     
+---------- ---------- ---------- ----------                                     
+CLERK            7782       7839       7782                                     
+SCOTT            7788       7566       7788                                     
+KING             7839                  7839                                     
+TURNER           7844       7698       7844                                     
+ADAMS            7876       7788       7876                                     
+JAMES            7900       7698       7900                                     
+FORD             7902       7566       7902                                     
+MILLAR           7934       7782       7934                                     
+SMITH            7369       7902       7369                                     
+ALLEN            7499       7698       7499                                     
+WARD             7521       7698       7521                                     
+
+ENAME           EMPNO        MGR      EMPNO                                     
+---------- ---------- ---------- ----------                                     
+JONES            7566       7839       7566                                     
+MARTIN           7654       7698       7654                                     
+BLAKE            7698       7839       7698                                     
+
+14 rows selected.
+
+SQL> SPPOL OFF;
+SP2-0042: unknown command "SPPOL OFF" - rest of line ignored.
+SQL> SPOOL OFF;
+SQL> SELECT E1.ENAME AS EMP_NAME,E2.ENAME AS MGR_NAME FROM EMP E1,EMP E2 WHERE E1.MGR=E2.ID;
+SELECT E1.ENAME AS EMP_NAME,E2.ENAME AS MGR_NAME FROM EMP E1,EMP E2 WHERE E1.MGR=E2.ID
+                                                                                 *
+ERROR at line 1:
+ORA-00904: "E2"."ID": invalid identifier 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT E1.ENAME AS EMP_NAME,E2.ENAME AS MGR_NAME FROM EMP E1,EMP E2 WHERE E1.MGR=E2.EMPNO
+SQL> /
+
+EMP_NAME   MGR_NAME                                                             
+---------- ----------                                                           
+CLERK      KING                                                                 
+SCOTT      JONES                                                                
+TURNER     BLAKE                                                                
+ADAMS      SCOTT                                                                
+JAMES      BLAKE                                                                
+FORD       JONES                                                                
+MILLAR     CLERK                                                                
+SMITH      FORD                                                                 
+ALLEN      BLAKE                                                                
+WARD       BLAKE                                                                
+JONES      KING                                                                 
+
+EMP_NAME   MGR_NAME                                                             
+---------- ----------                                                           
+MARTIN     BLAKE                                                                
+BLAKE      KING                                                                 
+
+13 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT E1.ENAME AS EMP_NAME,E2.ENAME AS MGR_NAME,E1.EMPNO FROM EMP E1,EMP E2 WHERE E1.MGR=E2.EMPNO
+SQL> /
+
+EMP_NAME   MGR_NAME        EMPNO                                                
+---------- ---------- ----------                                                
+CLERK      KING             7782                                                
+SCOTT      JONES            7788                                                
+TURNER     BLAKE            7844                                                
+ADAMS      SCOTT            7876                                                
+JAMES      BLAKE            7900                                                
+FORD       JONES            7902                                                
+MILLAR     CLERK            7934                                                
+SMITH      FORD             7369                                                
+ALLEN      BLAKE            7499                                                
+WARD       BLAKE            7521                                                
+JONES      KING             7566                                                
+
+EMP_NAME   MGR_NAME        EMPNO                                                
+---------- ---------- ----------                                                
+MARTIN     BLAKE            7654                                                
+BLAKE      KING             7698                                                
+
+13 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT ENAME,DNAME FROM EMP FULL JOIN DEPT ON EMP.DEPTNO=EMP.DEPTNO
+SQL> /
+
+ENAME      DNAME                                                                
+---------- --------------                                                       
+CLERK      ACCOUNTING                                                           
+CLERK      RESEARCH                                                             
+CLERK      SALES                                                                
+CLERK      OPERATIONS                                                           
+SCOTT      ACCOUNTING                                                           
+SCOTT      RESEARCH                                                             
+SCOTT      SALES                                                                
+SCOTT      OPERATIONS                                                           
+KING       ACCOUNTING                                                           
+KING       RESEARCH                                                             
+KING       SALES                                                                
+
+ENAME      DNAME                                                                
+---------- --------------                                                       
+KING       OPERATIONS                                                           
+TURNER     ACCOUNTING                                                           
+TURNER     RESEARCH                                                             
+TURNER     SALES                                                                
+TURNER     OPERATIONS                                                           
+ADAMS      ACCOUNTING                                                           
+ADAMS      RESEARCH                                                             
+ADAMS      SALES                                                                
+ADAMS      OPERATIONS                                                           
+JAMES      ACCOUNTING                                                           
+JAMES      RESEARCH                                                             
+
+ENAME      DNAME                                                                
+---------- --------------                                                       
+JAMES      SALES                                                                
+JAMES      OPERATIONS                                                           
+FORD       ACCOUNTING                                                           
+FORD       RESEARCH                                                             
+FORD       SALES                                                                
+FORD       OPERATIONS                                                           
+MILLAR     ACCOUNTING                                                           
+MILLAR     RESEARCH                                                             
+MILLAR     SALES                                                                
+MILLAR     OPERATIONS                                                           
+SMITH      ACCOUNTING                                                           
+
+ENAME      DNAME                                                                
+---------- --------------                                                       
+SMITH      RESEARCH                                                             
+SMITH      SALES                                                                
+SMITH      OPERATIONS                                                           
+ALLEN      ACCOUNTING                                                           
+ALLEN      RESEARCH                                                             
+ALLEN      SALES                                                                
+ALLEN      OPERATIONS                                                           
+WARD       ACCOUNTING                                                           
+WARD       RESEARCH                                                             
+WARD       SALES                                                                
+WARD       OPERATIONS                                                           
+
+ENAME      DNAME                                                                
+---------- --------------                                                       
+JONES      ACCOUNTING                                                           
+JONES      RESEARCH                                                             
+JONES      SALES                                                                
+JONES      OPERATIONS                                                           
+MARTIN     ACCOUNTING                                                           
+MARTIN     RESEARCH                                                             
+MARTIN     SALES                                                                
+MARTIN     OPERATIONS                                                           
+BLAKE      ACCOUNTING                                                           
+BLAKE      RESEARCH                                                             
+BLAKE      SALES                                                                
+
+ENAME      DNAME                                                                
+---------- --------------                                                       
+BLAKE      OPERATIONS                                                           
+
+56 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT ENAME,DNAME FROM EMP FULL JOIN DEPT ON EMP.DEPTNO=DEPT.DEPTNO
+SQL> /
+
+ENAME      DNAME                                                                
+---------- --------------                                                       
+CLERK      ACCOUNTING                                                           
+SCOTT      RESEARCH                                                             
+KING       ACCOUNTING                                                           
+TURNER     SALES                                                                
+ADAMS      RESEARCH                                                             
+JAMES      SALES                                                                
+FORD       RESEARCH                                                             
+MILLAR     ACCOUNTING                                                           
+SMITH      RESEARCH                                                             
+ALLEN      SALES                                                                
+WARD       SALES                                                                
+
+ENAME      DNAME                                                                
+---------- --------------                                                       
+JONES      RESEARCH                                                             
+MARTIN     SALES                                                                
+BLAKE      SALES                                                                
+           OPERATIONS                                                           
+
+15 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT ENAME,DNAME FROM EMP FULL JOIN DEPT ON EMP.DEPTNO=DEPT.DEPTNO
+SQL> SPOOL OFF;
+SQL> SELECT DNAME WHERE EMP.DEPTNO=DEPT.DEPTNO
+  2  ;
+SELECT DNAME WHERE EMP.DEPTNO=DEPT.DEPTNO
+             *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM EMP,DEPT WHERE EMP.DEPTNO=DEPT.DEPTNO
+  2  /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO     DEPTNO DNAME          LOC                                        
+---------- ---------- -------------- -------------                              
+      7782 CLERK      MANAGER         7839 09-JUN-81       2450                 
+        10         10 ACCOUNTING     NEW YORK                                   
+                                                                                
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                 
+        20         20 RESEARCH       DALLAS                                     
+                                                                                
+      7839 KING       PRESIDENT            17-NOV-81       5000                 
+        10         10 ACCOUNTING     NEW YORK                                   
+                                                                                
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO     DEPTNO DNAME          LOC                                        
+---------- ---------- -------------- -------------                              
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0      
+        30         30 SALES          CHICAGO                                    
+                                                                                
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                 
+        20         20 RESEARCH       DALLAS                                     
+                                                                                
+      7900 JAMES      CLERK           7698 03-DEC-81        950                 
+        30         30 SALES          CHICAGO                                    
+                                                                                
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO     DEPTNO DNAME          LOC                                        
+---------- ---------- -------------- -------------                              
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                 
+        20         20 RESEARCH       DALLAS                                     
+                                                                                
+      7934 MILLAR     CLERK           7782 23-JAN-82       1300                 
+        10         10 ACCOUNTING     NEW YORK                                   
+                                                                                
+      7369 SMITH      CLERK           7902 17-DEC-80        800                 
+        20         20 RESEARCH       DALLAS                                     
+                                                                                
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO     DEPTNO DNAME          LOC                                        
+---------- ---------- -------------- -------------                              
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300      
+        30         30 SALES          CHICAGO                                    
+                                                                                
+      7521 WARD       SALESMAN        7698 20-FEB-81       1250        500      
+        30         30 SALES          CHICAGO                                    
+                                                                                
+      7566 JONES      MANAGER         7839 02-APR-81       2975                 
+        20         20 RESEARCH       DALLAS                                     
+                                                                                
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM      
+---------- ---------- --------- ---------- --------- ---------- ----------      
+    DEPTNO     DEPTNO DNAME          LOC                                        
+---------- ---------- -------------- -------------                              
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400      
+        30         30 SALES          CHICAGO                                    
+                                                                                
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                 
+        30         30 SALES          CHICAGO                                    
+                                                                                
+
+14 rows selected.
+
+SQL> SET PAGES 150 LINES 150;
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM EMP,DEPT WHERE EMP.DEPTNO=DEPT.DEPTNO
+SQL> /
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO     DEPTNO DNAME          LOC                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- ---------- -------------- -------------                         
+      7782 CLERK      MANAGER         7839 09-JUN-81       2450                    10         10 ACCOUNTING     NEW YORK                              
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20         20 RESEARCH       DALLAS                                
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10         10 ACCOUNTING     NEW YORK                              
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30         30 SALES          CHICAGO                               
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20         20 RESEARCH       DALLAS                                
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30         30 SALES          CHICAGO                               
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20         20 RESEARCH       DALLAS                                
+      7934 MILLAR     CLERK           7782 23-JAN-82       1300                    10         10 ACCOUNTING     NEW YORK                              
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20         20 RESEARCH       DALLAS                                
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30         30 SALES          CHICAGO                               
+      7521 WARD       SALESMAN        7698 20-FEB-81       1250        500         30         30 SALES          CHICAGO                               
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20         20 RESEARCH       DALLAS                                
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30         30 SALES          CHICAGO                               
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30         30 SALES          CHICAGO                               
+
+14 rows selected.
+
+SQL> SELECT * FROM EMP NATURAL JOIN DEPT;
+
+    DEPTNO      EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM DNAME          LOC                                              
+---------- ---------- ---------- --------- ---------- --------- ---------- ---------- -------------- -------------                                    
+        10       7782 CLERK      MANAGER         7839 09-JUN-81       2450            ACCOUNTING     NEW YORK                                         
+        20       7788 SCOTT      ANALYST         7566 19-APR-87       3000            RESEARCH       DALLAS                                           
+        10       7839 KING       PRESIDENT            17-NOV-81       5000            ACCOUNTING     NEW YORK                                         
+        30       7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0 SALES          CHICAGO                                          
+        20       7876 ADAMS      CLERK           7788 23-MAY-87       1100            RESEARCH       DALLAS                                           
+        30       7900 JAMES      CLERK           7698 03-DEC-81        950            SALES          CHICAGO                                          
+        20       7902 FORD       ANALYST         7566 03-DEC-81       3000            RESEARCH       DALLAS                                           
+        10       7934 MILLAR     CLERK           7782 23-JAN-82       1300            ACCOUNTING     NEW YORK                                         
+        20       7369 SMITH      CLERK           7902 17-DEC-80        800            RESEARCH       DALLAS                                           
+        30       7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300 SALES          CHICAGO                                          
+        30       7521 WARD       SALESMAN        7698 20-FEB-81       1250        500 SALES          CHICAGO                                          
+        20       7566 JONES      MANAGER         7839 02-APR-81       2975            RESEARCH       DALLAS                                           
+        30       7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400 SALES          CHICAGO                                          
+        30       7698 BLAKE      MANAGER         7839 01-MAY-81       2850            SALES          CHICAGO                                          
+
+14 rows selected.
+
+SQL> SELECT DNAME WHERE EMP.DEPTNO=DEPT.DEPTNO;
+SELECT DNAME WHERE EMP.DEPTNO=DEPT.DEPTNO
+             *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME WHERE EMP.DEPTNO=DEPT.DEPTNO AND SAL IS NOT NULL AND MGR IS NULL
+SQL> /
+SELECT DNAME WHERE EMP.DEPTNO=DEPT.DEPTNO AND SAL IS NOT NULL AND MGR IS NULL
+             *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME  FROM EMP,DEPT WHERE EMP.DEPTNO=DEPT.DEPTNO AND SAL IS NOT NULL AND MGR IS NULL
+SQL> /
+
+DNAME                                                                                                                                                 
+--------------                                                                                                                                        
+ACCOUNTING                                                                                                                                            
+
+SQL> SPOOL OFF;
